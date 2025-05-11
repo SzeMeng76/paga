@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "paga.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     },
     {
@@ -12,12 +12,12 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "paga/$1"
+      "src": "/paga/(.*)",
+      "dest": "/paga/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "paga.py"
+      "dest": "/api/index.py"
     }
   ]
 }
