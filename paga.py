@@ -122,11 +122,9 @@ async def openUsdCard(request: Request):
                 if response.status_code == 200:
                     response_json = response.json()
                     if response_json['responseCode'] != 0:
-                        return Response(content=response.content, status_code=response.status_code,
-                                        headers=response.headers)
+                        return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
                 else:
-                    return Response(content=response.content, status_code=response.status_code,
-                                    headers=response.headers)
+                    return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
 
             json_data = {
                 'cardTheme': 'CLASSIC',
@@ -163,7 +161,7 @@ async def openUsdCard(request: Request):
             else:
                 logger.info(f' --- paga open usd card fail --- {email} --- {response.content}')
 
-    return Response(content=response.content, status_code=response.status_code, headers=response.headers)
+    return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
 
 
 # paga钱包充值到卡里
@@ -226,11 +224,9 @@ async def fundPagaCard(request: Request):
                 if response.status_code == 200:
                     response_json = response.json()
                     if response_json['responseCode'] != 0:
-                        return Response(content=response.content, status_code=response.status_code,
-                                        headers=response.headers)
+                        return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
                 else:
-                    return Response(content=response.content, status_code=response.status_code,
-                                    headers=response.headers)
+                    return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
             # 根据账号自动获取卡片信息
             if is_auto_card == '1':
                 json_data = {
@@ -267,13 +263,11 @@ async def fundPagaCard(request: Request):
 
                         logger.info(f' --- paga get user info fail --- {email} --- {response.content}')
 
-                        return Response(content="没有美金卡", status_code=response.status_code,
-                                        headers=response.headers)
+                        return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
                 else:
                     logger.info(f' --- paga get user info fail --- {email} --- {response.content}')
 
-                    return Response(content=response.text, status_code=response.status_code,
-                                    headers=response.headers)
+                    return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
 
             params = concatenate_parameters(cardLastFourDigits, amount, externalSerialNumber, privateKey)
 
@@ -305,7 +299,7 @@ async def fundPagaCard(request: Request):
 
     logger.info(f' --- paga fundPagaCard --- {email} --- {response.content}')
 
-    return Response(content=response.content, status_code=response.status_code, headers=response.headers)
+    return Response(content=response.content, status_code=response.status_code, headers={"Content-Type": "application/json"})
 
 
 def concatenate_parameters(*str_arr):
