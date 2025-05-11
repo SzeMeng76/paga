@@ -1,17 +1,28 @@
-import sys
-import os
-from pathlib import Path
+from fastapi import FastAPI
+from starlette.responses import HTMLResponse
 
-# 添加项目根目录到Python路径
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# 创建应用
+app = FastAPI()
 
-# 导入主应用
-from paga import app
+# 简单的根路由
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return """
+    <html>
+        <head>
+            <title>测试页面</title>
+        </head>
+        <body>
+            <h1>测试页面</h1>
+            <p>这是一个简单的测试页面，用于验证FastAPI应用能否在Vercel上运行。</p>
+        </body>
+    </html>
+    """
 
-# 确保静态文件目录存在
-PAGA_DIR = Path("paga")
-if not PAGA_DIR.exists():
-    PAGA_DIR.mkdir(parents=True, exist_ok=True)
+# 健康检查接口
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
 
-# 导出handler供Vercel使用
+# 导出handler
 handler = app
